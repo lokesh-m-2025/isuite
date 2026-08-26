@@ -1,0 +1,17 @@
+{
+  "app_name": "SAP_Sales_ETL",
+  "watermark": {
+    "dynamodb_table": "etl_pipeline_state",
+    "pipeline_id": "sap_sales_daily_extract",
+    "default_lookback_days": 30
+  },
+  "source": {
+    "jdbc_fetch_size": 10000,
+    "num_partitions": 8
+  },
+  "target": {
+    "s3_path": "s3a://company-data-lake-prod/raw/sap_sales",
+    "quarantine_s3_path": "s3a://company-data-lake-prod/quarantine/sap_sales",
+    "partition_cols": ["year", "month", "day"]
+  }
+}
