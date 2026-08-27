@@ -1,0 +1,10 @@
+aws:
+  region: "us-east-1"
+spark:
+  master: "yarn"
+  driver_memory: "2g"
+  executor_memory: "4g"
+  executor_cores: 2
+s3:
+  input_path: "s3://your-bucket/input/orders.csv"
+  output_path: "s3://your-bucket/output/customer_totals.csv"
