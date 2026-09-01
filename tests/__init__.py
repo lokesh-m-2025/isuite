@@ -1,1 +1,1 @@
-"""Package marker for test suit."""
+"""Test package initialization."""
