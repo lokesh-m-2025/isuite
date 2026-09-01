@@ -1,28 +1,32 @@
-# S3 Customer Orders Aggregate ETL Pipeline
+# S3 Customer Orders Aggregation ETL Pipeline
 
-Production-ready Python ETL job to aggregate order amounts and count per customer from S3.
+Production-ready AWS Python ETL pipeline that extracts customer order data from S3, validates records, computes aggregations (`total_amount` and `order_count` per `customer_id`), and writes the processed output back to S3.
 
 ## How to run this
 
 1. Prerequisites
-   - Python 3.9+ environment.
-   - Access permissions to target AWS S3 bucket `ignitho-development-bucket`.
+Python 3.10+ installed on your machine. AWS credentials configured with appropriate read/write access permissions for `s3://ignitho-development-bucket`.
 
 2. Installing dependencies
-   Run the command:
-   ```bash
-   pip install boto3 pandas python-dotenv
-   ```
+Run the following command to install the required Python packages:
+```bash
+pip install pandas>=2.0.0 boto3>=1.28.0 python-dotenv>=1.0.0 pydantic>=2.0.0 pytest>=7.4.0 moto>=4.2.0
+```
 
 3. Configuring credentials
-   Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in real AWS credentials and S3 configuration settings in `.env` only. `.env.example` stays blank so it can be committed. `.gitignore` already excludes `.env` from version control, so nothing further needs doing there.
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
+Fill in real values in `.env` only. `.env.example` stays blank so it can be committed. `.gitignore` already excludes `.env` from version control, so nothing further needs doing there.
 
 4. Running it
-   Execute the ETL job:
-   ```bash
-   python main.py
-   ```
+Execute the main ETL pipeline:
+```bash
+python -m src.pipeline
+```
+
+To execute the automated unit and integration tests:
+```bash
+pytest
+```
