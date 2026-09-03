@@ -1,1 +1,1 @@
-"""Package initialization for ETL pipeline."""
+"""Order aggregation ETL pipeline package."""
