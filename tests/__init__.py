@@ -1,1 +1,1 @@
-"""Package marker for test suit."""
+"""Tests package for ETL pipeline."""
