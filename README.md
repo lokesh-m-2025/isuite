@@ -1,28 +1,27 @@
-# S3 Customer Orders Aggregate ETL Pipeline
+# Order ETL Pipeline
 
-Production-ready Python ETL job to aggregate order amounts and count per customer from S3.
+This repository contains a production‑grade Python ETL pipeline that extracts daily order CSV files from an AWS S3 bucket, validates and cleans the data, and loads incremental records into a Snowflake ORDERS table.
 
 ## How to run this
 
-1. Prerequisites
-   - Python 3.9+ environment.
-   - Access permissions to target AWS S3 bucket `ignitho-development-bucket`.
+1. **Prerequisites**
+   - Python 3.9+
+   - `pip` package manager
 
-2. Installing dependencies
-   Run the command:
+2. **Installing dependencies**
    ```bash
-   pip install boto3 pandas python-dotenv
+   pip install boto3 snowflake-connector-python python-dotenv
    ```
 
-3. Configuring credentials
-   Copy `.env.example` to `.env`:
+3. **Configuring credentials**
    ```bash
    cp .env.example .env
+   # Edit .env and fill in the real values
    ```
-   Fill in real AWS credentials and S3 configuration settings in `.env` only. `.env.example` stays blank so it can be committed. `.gitignore` already excludes `.env` from version control, so nothing further needs doing there.
+   The `.env` file is ignored by Git (`.gitignore`), so your secrets stay out of version control.
 
-4. Running it
-   Execute the ETL job:
+4. **Running it**
    ```bash
-   python main.py
+   python -m src.etl
    ```
+   The script will process any new CSV files in the configured S3 prefix and update the Snowflake table accordingly.
