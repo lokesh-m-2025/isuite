@@ -1,0 +1,40 @@
+{
+  "columns": [
+    {
+      "name": "order_id",
+      "type": "integer",
+      "nullable": false,
+      "description": "Unique order identifier"
+    },
+    {
+      "name": "customer_id",
+      "type": "integer",
+      "nullable": false,
+      "description": "Customer identifier"
+    },
+    {
+      "name": "order_date",
+      "type": "date",
+      "nullable": false,
+      "description": "Date order was placed (ISO 8601 format)"
+    },
+    {
+      "name": "amount",
+      "type": "float",
+      "nullable": false,
+      "description": "Order total amount"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "nullable": true,
+      "description": "Currency code (ISO 4217)"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "nullable": false,
+      "description": "Order status (PENDING, COMPLETED, CANCELLED)"
+    }
+  ]
+}
