@@ -1,0 +1,11 @@
+Total Revenue = SUM(Orders[amount])
+-- Grain: Revenue across all transactions in the current filter context (date, product, etc.). No-data: blank. Filter context: inherited from report slicers and relationships.
+
+Prior Year Revenue = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(Calendar[Date]))
+-- Grain: Total Revenue shifted back exactly 365 days (or 366 in leap years) using the marked Calendar[Date] dimension. No-data: blank if no prior-year data exists. Filter context: Calendar date relationship must be active; requires Calendar table to be marked as date table. Depends on: Total Revenue (must be created first).
+
+Revenue YoY % = DIVIDE([Total Revenue] - [Prior Year Revenue], [Prior Year Revenue], 0)
+-- Grain: Percentage change from prior year to current year revenue. No-data: 0 (third argument to DIVIDE) if prior year is blank; -100% if current period has revenue but prior year is 0 (new year-over-year period with no history). Filter context: inherits Calendar date range from slicer or visual. Depends on: Total Revenue, Prior Year Revenue (must both be created before this measure).
+
+Top Products Rank = RANKX(ALL(Orders[product_name]), [Total Revenue])
+-- Grain: Rank of each product by descending revenue within the current date filter context. No-data: blank if product has no orders. Filter context: date filters apply; product is not filtered (ALL removes any existing product filter to rank across all). Depends on: Total Revenue.
