@@ -1,0 +1,35 @@
+Total Revenue = SUM(Orders[Revenue])
+-- Returns the sum of all Revenue in the current filter context. Blank if no Orders rows are visible.
+
+Prior Year Revenue =
+VAR CurrentYear = MAX(Date[Year])
+VAR PriorYear = CurrentYear - 1
+VAR Result =
+    CALCULATE(
+        [Total Revenue],
+        FILTER(Date, Date[Year] = PriorYear)
+    )
+RETURN
+    Result
+-- Sums revenue for the calendar year immediately prior to the selected year. Blank if no prior-year data exists.
+
+Year over Year Growth % =
+VAR Current = [Total Revenue]
+VAR Prior = [Prior Year Revenue]
+RETURN
+    DIVIDE(Current - Prior, Prior, "N/A")
+-- Compares current-year revenue to prior-year revenue as a percentage change. Returns "N/A" if prior year is blank or zero (expected when comparing a real period to an empty prior period). A period with real revenue vs. an empty prior period will show -100% (correct behaviour, not an error).
+
+Order Count = COUNTROWS(Orders)
+-- Returns the number of distinct Order rows in the current filter context. Blank if no Orders are visible.
+
+Average Order Value = DIVIDE([Total Revenue], [Order Count])
+-- Returns total revenue divided by order count. Blank if order count is zero or blank.
+
+Product Rank by Revenue =
+RANKX(
+    ALL(Product[ProductName]),
+    [Total Revenue],,
+    DESC
+)
+-- Ranks products by total revenue (highest first) within the current Year context. Use in a visual with Product[ProductName] on rows and this measure on values to show top products. Restarts ranking per year slice if Year is also in the filter context.
